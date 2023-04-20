@@ -1,0 +1,15 @@
+<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
+  <figure class="effect-ming tm-video-item">
+    <img src="{{ image.image.url }}" alt="{{ image.name }}" class="img-fluid">
+    <figcaption class="d-flex align-items-center justify-content-center">
+      <h2>{{ image.image_name }}</h2>
+      <a href="{% url 'gallery:image' image.pk %}">View more</a>
+    </figcaption>          
+  </figure>
+  <div class="d-flex justify-content-between tm-text-gray">
+    {% include 'gallery/includes/taglist.html' with tags=image.tags.all %}
+    <span>
+      <input type="checkbox" id="{{ image.pk }}" name="{{ image.pk }}" form="tag_selector" class="form-check-input">
+    </span>
+  </div>
+</div>

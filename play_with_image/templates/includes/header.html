@@ -10,7 +10,6 @@
   <div class="container-fluid">
     <a class="navbar-brand" href="/">
       <i class="fas fa-film mr-2"></i>
-      Home
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <i class="fas fa-bars"></i>
@@ -21,17 +20,17 @@
         <li class="nav-item">
           <a class="nav-link nav-link-1{% if view_name in 'gallery:index,gallery:tag_view,gallery:image' %} active{% endif %}" 
             aria-current="page" href="{% url 'gallery:index' %}"
-            >Photos</a>
+            >Картинки</a>
         </li>
         <li class="nav-item">
           <a class="nav-link nav-link-2{% if view_name in 'gallery:add_image' %} active{% endif %}" 
             href="{% url 'gallery:add_image' %}"
-            >Add Image</a>
+            >Добавить изображение</a>
         </li>
         <li class="nav-item">
           <a class="nav-link nav-link-3{% if view_name == 'gallery:about' %} active{% endif %}" 
             href="{% url 'gallery:about' %}"
-            >About</a>
+            >О проекте</a>
         </li>
       {% endwith %}
     </ul>

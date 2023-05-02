@@ -9,41 +9,39 @@
         {{ title }}
       </h2>
       <div class="col-6 d-flex justify-content-end align-items-center">
-        <form action="" class="tm-text-primary" method="POST" id="tag_selector">
-          {% csrf_token %}
-           Тег: <input name="tag" type="input" placeholder="Введите тег" size="10" class="tm-text-primary">&nbsp;
+        <form action="" class="tm-text-primary" method="GET" id="tag_selector">
+          {{ tag_form.category.label }} {{ tag_form.category }} {{ tag_form.tag.label }} {{ tag_form.tag }}
         </form>
         <form action="" class="tm-text-primary" method="GET">
-          Page <input name="page" type="text" value="{{ page }}" size="1" class="tm-input-paging tm-text-primary"> of {{ max_page }}.&nbsp;
+          Страница <input name="page" type="text" value="{{ page_obj.number }}" size="1" class="tm-input-paging tm-text-primary"> из {{ paginator.num_pages }}.&nbsp;
         </form>
-        <form action="" class="tm-text-primary" method="POST">
-          {% csrf_token %}
-           Image per page <input name="per_page" type="input" value="{{ per_page }}" size="1" class="tm-input-paging tm-text-primary">&nbsp;
+        <form action="" class="tm-text-primary" method="GET">
+           Изображений на страницу <input name="image_per_page" type="input" value="{{ image_per_page }}" size="1" class="tm-input-paging tm-text-primary">&nbsp;
         </form>
       </div>
     </div>
     <div class="row tm-mb-90 tm-gallery">
       {% for image in images %}
-        {% include 'gallery/includes/thumb.html' with image=image %}
+        {% include 'gallery/includes/thumb.html' %}
       {% endfor %}    
     </div> <!-- row -->
     <div class="row tm-mb-90">
       <div class="col-12 d-flex justify-content-between align-items-center tm-paging-col">
         <a 
-          href="{% if page > 1 %}?page={{ page|add:-1 }}{% else %}javascript:void(0);{% endif %}" 
-          class="btn btn-primary tm-btn-prev mb-2 {% if page == 1 %}disabled{% endif %}"
+          href="{% if page_obj.has_previous %}?page={{ page_obj.previous_page_number }}{% else %}javascript:void(0);{% endif %}" 
+          class="btn btn-primary tm-btn-prev mb-2 {% if not page_obj.has_previous %}disabled{% endif %}"
         >Previous</a>
         <div class="tm-paging d-flex">
-          {% for p in pagination %}
-            {% if p >= page|add:-2 and p <= page|add:2 %}
-              <a href="{% if p == page %}javascript:void(0);{% else %}?page={{ p }}{% endif %}" 
-                class="{% if p == page %}active{% endif %} tm-paging-link">{{ p }}</a>
+          {% for p in paginator.page_range %}
+            {% if p >= page_obj.number|add:-2 and p <= page_obj.number|add:2 %}
+              <a href="{% if p == page_obj.number %}javascript:void(0);{% else %}?page={{ p }}{% endif %}" 
+                class="{% if p == page_obj.number %}active{% endif %} tm-paging-link">{{ p }}</a>
             {% endif %}
           {% endfor %}
         </div>
         <a 
-        href="{% if page < max_page %}?page={{ page|add:1 }}{% else %}javascript:void(0);{% endif %}" 
-        class="btn btn-primary tm-btn-prev mb-2 {% if page == max_page %}disabled{% endif %}"
+        href="{% if page_obj.has_next %}?page={{ page_obj.next_page_number }}{% else %}javascript:void(0);{% endif %}" 
+        class="btn btn-primary tm-btn-prev mb-2 {% if not page_obj.has_next %}disabled{% endif %}"
       >Next Page</a>
       </div>      
     </div>

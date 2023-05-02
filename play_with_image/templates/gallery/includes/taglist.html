@@ -1,5 +1,10 @@
 <span class="tm-text-gray-light">
   {% for tag in tags %}
-    <a href="{% url 'gallery:tag_view' tag %}">{{ tag }}</a>{% if not forloop.last %},{% endif %}
+    {% ifchanged tag.category %}
+      <span>
+        {% if not forloop.first %}<br>{% endif %} {{ tag.category }}: &nbsp;
+      </span>
+    {% endifchanged %}
+      <a href="{% url 'gallery:tag_view' tag %}">{{ tag }}</a>{% if not forloop.last %},{% endif %}
   {% endfor %}
 </span>
